@@ -29,7 +29,7 @@ header {
 }
 
 #current-song {
-  width: 100%
+  width: 100%;
   height: 20px;
   font-size: 20px;
   background-color: #22242A;
@@ -135,8 +135,8 @@ header {
   width: 210px;
   text-align: center;
   cursor: pointer;
-  height: 25px; 
-  line-height: 25px; 
+  height: 25px;
+  line-height: 25px;
   position: absolute;
 }
 
@@ -150,11 +150,12 @@ header {
   width: 210px;
   text-align: center;
   cursor: pointer;
-  height: 25px; 
-  line-height: 25px; 
+  height: 25px;
+  line-height: 25px;
   position: relative;
   left: 50%;
 }
+
 #search-input {
   position: relative;
   bottom: 25.5px;
@@ -227,7 +228,7 @@ header {
 }
 
 .pending-songs {
-  width: 100%
+  width: 100%;
   height: 35px;
   font-size: 15px;
   background-color: #22242A;
@@ -296,6 +297,7 @@ header {
   padding-left: 5px;
   padding-right: 5px;
 }
+
 .user-message {
   overflow-wrap: break-word;
   word-wrap: break-word;
@@ -508,4 +510,3 @@ input[type=range]::-moz-range-thumb {
   border-radius: 100%;
   box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
 }
-

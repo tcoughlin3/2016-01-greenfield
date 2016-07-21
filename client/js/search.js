@@ -20,7 +20,14 @@ angular.module('search', [])
       }
     },
     transclude: true,
-    template: "<div class='ng-modal' ng-show='show'><div class='ng-modal-overlay' ng-click='hideResults()'></div><div class='ng-modal-dialog' ng-style='dialogStyle'><div class='ng-modal-dialog-content' ng-transclude></div></div></div>"
+    template: `
+      <div class='ng-modal' ng-show='show'>
+        <div class='ng-modal-overlay' ng-click='hideResults()'></div>
+        <div class='ng-modal-dialog' ng-style='dialogStyle'>
+          <div class='ng-modal-dialog-content' ng-transclude></div>
+        </div>
+      </div>"
+      `
   }
 })
 
@@ -53,6 +60,7 @@ angular.module('search', [])
 
   //Toggles the modal view
   $scope.toggleResults = function() {
+    $scope.field = null;
     $scope.showResults = !$scope.showResults;
   };
 }])

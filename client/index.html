@@ -106,12 +106,12 @@
       <div id="chat-container" scroll-directive="messages" ng-model="messages">
         <table class="chat-table">
           <tbody ng-show="tab =='chat'" id="messages" ng-repeat="message in messages track by $index">
-            <tr class="user-name">
+            <tr ng-if="message.username !== ''" class="user-name">
               <td ng-cloak id="user-name" ng-show="messages[{{$index-1}}].username !== message.username">
                 <strong>{{ message.username }}</strong> <span class="time">{{message.time}}</span>
               </td>
             </tr>
-            <tr class="user-message">
+            <tr ng-class="{'user-message notif': message.username === ''}">
               <td id="user-message" ng-cloak ng-bind-html="message.message | linky:'_blank'"></td>
             </tr>
           </tbody>

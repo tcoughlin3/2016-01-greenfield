@@ -48,7 +48,6 @@ angular.module('chat', ['ngSanitize'])
     }
   }
 
-  //Get current time
   $scope.getCurrentTime = function() {
     var date = new Date();
     var hours = date.getHours();
@@ -75,41 +74,28 @@ angular.module('chat', ['ngSanitize'])
   };
 
   $scope.easterEgg = function () {
+    var messages = ['Easter egg detected.', 'Preparing meow mode.', 'MEOW MODE INITIALIZED'];
 
-    setTimeout(function() { 
-      socket.emit('sendMessage', { message: 'Easter egg detected.', 
-                                   username: 'Easter bot', 
-                                   time: $scope.time });
-    }, 1000);
+    messages.forEach(easterHelper);
+    setTimeout(function() { socket.emit('easterEgg') }, (messages.length + 1) * 2000);
 
-    setTimeout(function() {
-      socket.emit('sendMessage', { message: 'Preparing meow mode.', 
-                                   username: 'Easter bot', 
-                                   time: $scope.time });
-    }, 3000);
-
-    setTimeout(function() {
-      socket.emit('sendMessage', { message: 'MEOW MODE INITIALIZED', 
-                                   username: 'Easter bot', 
-                                   time: $scope.time })
-    }, 5000)
-
-    setTimeout(function() {
-      socket.emit('easterEgg');
-    }, 6000);
+    function easterHelper(text, i) {
+      var message = { message: text, username: 'Easter bot', time: $scope.time };
+      setTimeout(function() {
+        socket.emit('sendMessage', message);
+      }, (i + 1) * 2000);
+    }
   }
 
   //Send message to server
   $scope.send = function(message) {
     $scope.getCurrentTime();
-    socket.emit('sendMessage', { message: message, 
-                                 username: $scope.username, 
+    socket.emit('sendMessage', { message: message,
+                                 username: $scope.username,
                                  time: $scope.time });
-
     if (message === "meow") {
       $scope.easterEgg();
     }
-    
     $scope.message = null;
   }
 
@@ -129,5 +115,4 @@ angular.module('chat', ['ngSanitize'])
       $scope.usersConnected = Object.keys(users).length;
     });
   });
-
 });

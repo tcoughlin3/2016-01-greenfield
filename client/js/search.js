@@ -20,12 +20,18 @@ angular.module('search', [])
       }
     },
     transclude: true,
-    template: "<div class='ng-modal' ng-show='show'><div class='ng-modal-overlay' ng-click='hideResults()'></div><div class='ng-modal-dialog' ng-style='dialogStyle'><div class='ng-modal-dialog-content' ng-transclude></div></div></div>"
+    template: `
+      <div class='ng-modal' ng-show='show'>
+        <div class='ng-modal-overlay' ng-click='hideResults()'></div>
+        <div class='ng-modal-dialog' ng-style='dialogStyle'>
+          <div class='ng-modal-dialog-content' ng-transclude></div>
+        </div>
+      </div>"
+      `
   }
 })
 
-.controller('SearchController', ['$scope', '$window', 'SearchFactory', function($scope, $window, SearchFactory){
-
+.controller('SearchController', ['$scope', '$window', 'SearchFactory', function($scope, $window, SearchFactory) {
   $scope.searchList;
 
   //Retrieve and populate scope with YouTube search results
@@ -45,7 +51,7 @@ angular.module('search', [])
                                title: video.snippet.title,
                                thumbnail: video.snippet.thumbnails.default.url,
                                username: $window.username,
-                               socket: socket.id, 
+                               socket: socket.id,
                                duration: seconds });
     });
   }
@@ -54,9 +60,9 @@ angular.module('search', [])
 
   //Toggles the modal view
   $scope.toggleResults = function() {
+    $scope.field = null;
     $scope.showResults = !$scope.showResults;
   };
-
 }])
 
 //Search query from YouTube Data API
@@ -90,6 +96,6 @@ angular.module('search', [])
   return {
     fetchSearch: fetchSearch,
     fetchResource: fetchResource
-  }
+  };
 
-}])
+}]);

@@ -79,10 +79,8 @@ io.on('connection', function(socket) {
 
   socket.on('enqueue', function(data) {
     if (current) {
-
       queue.push(data);
       io.emit('addVideo', data);
-
     } else {
       set = false;
       current = data;
@@ -105,17 +103,16 @@ io.on('connection', function(socket) {
 
   socket.on('easterEgg', function() {
     if (queue.length) {
-      queue.unshift({ id: 'SbyZDq76T74', 
-                      title: 'Meow Mix song', 
-                      username: 'Meow Mode', 
+      queue.unshift({ id: 'SbyZDq76T74',
+                      title: 'Meow Mix song',
+                      username: 'Meow Mode',
                       socket: current.socket });
       current = queue.shift();
       reset();
-
     } else {
-      current = { id: 'SbyZDq76T74', 
-                  title: 'Meow Mix song', 
-                  username: 'Meow Mode', 
+      current = { id: 'SbyZDq76T74',
+                  title: 'Meow Mix song',
+                  username: 'Meow Mode',
                   socket: socket.id.slice(2) };
       reset();
     }
@@ -139,7 +136,6 @@ io.on('connection', function(socket) {
   socket.on('skip', function(easterEgg) {
     var id = socket.id;
     if (current && id.slice(2) === current.socket || easterEgg) {
-
       if (queue.length) {
         set = false;
         current = queue.shift();
@@ -174,17 +170,12 @@ io.on('connection', function(socket) {
     if (votes[socket.id] === 'up') {
       upvotes--;
     }
-
     if (votes[socket.id] === 'down') {
       downvotes--;
     }
-
     io.emit('changeVotes', {up: upvotes, down: downvotes});
-
     io.emit('chatMessage', {username: "", message: users[socket.id] + " has left"});
-
     delete users[socket.id];
-
     io.emit('usersOnline', users);
   });
 
@@ -195,23 +186,19 @@ io.on('connection', function(socket) {
       downvotes--;
       upvotes++;
     }
-
     if (votes[socket.id] === undefined) {
       votes[socket.id] = 'up';
       upvotes++;
     }
-
     io.emit('changeVotes', {up: upvotes, down: downvotes});
   });
 
   socket.on('downVote', function(){
-    if(votes[socket.id] === 'up'){
+    if (votes[socket.id] === 'up'){
       votes[socket.id] = 'down';
       upvotes--;
       downvotes++;
-    }
-
-    if(votes[socket.id] === undefined) {
+    } else if (votes[socket.id] === undefined) {
       votes[socket.id] = 'down';
       downvotes++;
     }
@@ -231,7 +218,7 @@ io.on('connection', function(socket) {
         io.emit('stopVideo');
       }
     }
-    
+
     io.emit('changeVotes', {up: upvotes, down: downvotes});
   });
 
@@ -239,7 +226,4 @@ io.on('connection', function(socket) {
   socket.on('getSync', function() {
     io.sockets.connected[socket.id].emit('setSync', timeTotal - timeLeft || timeTotal);
   });
-
 });
-
-

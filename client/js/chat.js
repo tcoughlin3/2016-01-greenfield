@@ -77,13 +77,13 @@ angular.module('chat', ['ngSanitize'])
     var messages = ['Easter egg detected.', 'Preparing meow mode.', 'MEOW MODE INITIALIZED'];
 
     messages.forEach(easterHelper);
-    setTimeout(function() { socket.emit('easterEgg') }, messages.length * 2000);
+    setTimeout(function() { socket.emit('easterEgg') }, (messages.length + 1) * 2000);
 
     function easterHelper(text, i) {
       var message = { message: text, username: 'Easter bot', time: $scope.time };
       setTimeout(function() {
         socket.emit('sendMessage', message);
-      }, i * 2000);
+      }, (i + 1) * 2000);
     }
   }
 
@@ -93,11 +93,9 @@ angular.module('chat', ['ngSanitize'])
     socket.emit('sendMessage', { message: message,
                                  username: $scope.username,
                                  time: $scope.time });
-
     if (message === "meow") {
       $scope.easterEgg();
     }
-
     $scope.message = null;
   }
 
@@ -117,5 +115,4 @@ angular.module('chat', ['ngSanitize'])
       $scope.usersConnected = Object.keys(users).length;
     });
   });
-
 });
